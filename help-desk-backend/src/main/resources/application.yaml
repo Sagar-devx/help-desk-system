@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: help-desk-backend
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/help-desk?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  ai:
+    openai:
+      base-url: "https://api.groq.com/openai/v1"
+      api-key: ${OPENAI_API_KEY}
+      chat:
+        options:
+          model: "qwen/qwen3.8-27b"
+
+server:
+  port: 8081
+
