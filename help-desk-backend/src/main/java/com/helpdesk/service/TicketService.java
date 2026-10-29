@@ -2,48 +2,43 @@ package com.helpdesk.service;
 
 import com.helpdesk.entity.Ticket;
 import com.helpdesk.repository.TicketRepository;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
-@Data
+@Slf4j
 public class TicketService {
 
     private final TicketRepository ticketRepository;
 
-    //create Ticket
-    public Ticket createTicket(Ticket ticket)
-    {
-        return ticketRepository.save(ticket);
+    public Ticket createTicket(Ticket ticket) {
+        ticket.setId(null);
+        Ticket saved = ticketRepository.save(ticket);
+        log.info("Persisted ticket in database: ID={}, email={}, status={}", saved.getId(), saved.getEmail(), saved.getStatus());
+        return saved;
     }
 
-
-    //update Ticket
-    public Ticket updateTicket(Ticket ticket)
-    {
-        return ticketRepository.save(ticket);
+    public Ticket updateTicket(Ticket ticket) {
+        Ticket updated = ticketRepository.save(ticket);
+        log.info("Updated ticket in database: ID={}", updated.getId());
+        return updated;
     }
 
-    //get Ticket
-    public Ticket getTicket(Long ticketId)
-    {
+    public Ticket getTicket(Long ticketId) {
         return ticketRepository.findById(ticketId).orElse(null);
     }
 
-    //Get ticket by username
-
-    public Ticket getTicketByUserName(String username)
-    {
-        return ticketRepository.findByUsername(username).orElse(null);
+    public List<Ticket> getTicketsByEmail(String email) {
+        return ticketRepository.findByEmailOrderByIdDesc(email);
     }
 
-    // Get Current System time
     @Tool(description = "This tool helps to get current system time.")
-    public String getCurrentTime()
-    {
+    public String getCurrentTime() {
         return String.valueOf(System.currentTimeMillis());
     }
 }

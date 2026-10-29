@@ -20,12 +20,18 @@ spring:
       chat:
         options:
           model: "qwen/qwen3.8-27b"
+    chat:
+      memory:
+        repository:
+          jdbc:
+            initialize-schema: ALWAYS
 
 server:
   port: 8081
 
 logging:
   level:
+    com.helpdesk: DEBUG
+    org.springframework.ai.tool: DEBUG
     org.springframework.ai.chat.client.advisor: DEBUG
-
-
+    org.hibernate.SQL: DEBUG

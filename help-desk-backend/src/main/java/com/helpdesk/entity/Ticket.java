@@ -31,8 +31,7 @@ public class Ticket {
     @Column(length = 1000)
     private String description;
 
-    @Column(unique = true)
-    private String username;
+    private String email;
 
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
@@ -46,11 +45,16 @@ public class Ticket {
             this.createdOn = LocalDateTime.now();
         }
         this.updatedOn = LocalDateTime.now();
+        if (this.status == null) {
+            this.status = Status.OPEN;
+        }
+        if (this.priority == null) {
+            this.priority = Priority.MEDIUM;
+        }
     }
 
     @PreUpdate
-    void preUpdate()
-    {
-        this.updatedOn=LocalDateTime.now();
+    void preUpdate() {
+        this.updatedOn = LocalDateTime.now();
     }
 }
