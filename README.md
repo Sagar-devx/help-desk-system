@@ -259,9 +259,3 @@ User: "My Wi-Fi keeps dropping. Email: john@test.com"
 Built with ☕ Java, 🍃 Spring, and a lot of curiosity.
 
 ---
-
-<div align="center">
-
-⭐ **Star this repo** if you found it useful!
-
-</div>
