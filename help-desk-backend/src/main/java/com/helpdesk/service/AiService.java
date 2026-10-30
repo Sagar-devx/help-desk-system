@@ -1,6 +1,5 @@
 package com.helpdesk.service;
 
-import com.helpdesk.tools.EmailTool;
 import com.helpdesk.tools.TicketDatabaseTool;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
@@ -16,7 +15,6 @@ public class AiService {
 
     private final ChatClient chatClient;
     private final TicketDatabaseTool ticketDatabaseTool;
-    private final EmailTool emailTool;
 
     @Value("classpath:helpdesk-system.st")
     private Resource systemPromptResource;
@@ -25,7 +23,7 @@ public class AiService {
     {
         return this.chatClient
                 .prompt()
-                .tools(ticketDatabaseTool, emailTool)
+                .tools(ticketDatabaseTool)
                 .advisors(advisorSpec -> advisorSpec.param(ChatMemory.CONVERSATION_ID,conversationId))
                 .system(systemPromptResource)
                 .user(query)
@@ -37,7 +35,7 @@ public class AiService {
     {
         return this.chatClient
                 .prompt()
-                .tools(ticketDatabaseTool, emailTool)
+                .tools(ticketDatabaseTool)
                 .advisors(advisorSpec -> advisorSpec.param(ChatMemory.CONVERSATION_ID,conversationId))
                 .system(systemPromptResource)
                 .user(query)

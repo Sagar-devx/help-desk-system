@@ -2,6 +2,7 @@ package com.helpdesk.controller;
 
 import com.helpdesk.service.AiService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -13,20 +14,17 @@ public class AiController {
 
     private final AiService aiService;
 
-    @GetMapping
-    public ResponseEntity<String> getResponse(@RequestBody String query,
-                                              @RequestHeader("ConversationId")String conversationId)
-    {
-        return ResponseEntity.ok(aiService.getResponseFromAssistant(query,conversationId));
+    @PostMapping
+    public ResponseEntity<String> getResponse(
+            @RequestBody String query,
+            @RequestHeader(value = "ConversationId", required = false, defaultValue = "default") String conversationId) {
+        return ResponseEntity.ok(aiService.getResponseFromAssistant(query, conversationId));
     }
 
-    @GetMapping("/stream")
-    public Flux<String> streamResponse(@RequestBody String query,
-                                       @RequestHeader("ConversationId")String conversationId)
-    {
-       return aiService.getStreamResponseFromAssistant(query,conversationId);
+    @PostMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<String> streamResponse(
+            @RequestBody String query,
+            @RequestHeader(value = "ConversationId", required = false, defaultValue = "default") String conversationId) {
+        return aiService.getStreamResponseFromAssistant(query, conversationId);
     }
-
-
-
 }

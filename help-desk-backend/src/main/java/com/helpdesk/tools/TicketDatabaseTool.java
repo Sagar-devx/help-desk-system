@@ -79,7 +79,11 @@ public class TicketDatabaseTool {
         }
 
         if (request.description() != null && !request.description().isBlank()) {
-            ticket.setDescription(ticket.getDescription() + "\nUpdate: " + request.description());
+            if (ticket.getDescription() == null || ticket.getDescription().isBlank()) {
+                ticket.setDescription(request.description());
+            } else {
+                ticket.setDescription(ticket.getDescription() + "\nUpdate: " + request.description());
+            }
         }
         if (request.status() != null && !request.status().isBlank()) {
             try {
@@ -95,5 +99,10 @@ public class TicketDatabaseTool {
         Ticket updated = service.updateTicket(ticket);
         log.info("Tool finished: updateTicket updated ticket ID={}", updated.getId());
         return updated;
+    }
+
+    @Tool(description = "This tool helps to get current system time.")
+    public String getCurrentTime() {
+        return String.valueOf(System.currentTimeMillis());
     }
 }

@@ -4,7 +4,6 @@ import com.helpdesk.entity.Ticket;
 import com.helpdesk.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,10 +34,5 @@ public class TicketService {
 
     public List<Ticket> getTicketsByEmail(String email) {
         return ticketRepository.findByEmailOrderByIdDesc(email);
-    }
-
-    @Tool(description = "This tool helps to get current system time.")
-    public String getCurrentTime() {
-        return String.valueOf(System.currentTimeMillis());
     }
 }

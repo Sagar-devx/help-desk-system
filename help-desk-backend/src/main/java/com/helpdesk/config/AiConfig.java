@@ -14,14 +14,16 @@ public class AiConfig {
     @Bean
     public ChatClient chatClient(ChatClient.Builder builder, JdbcChatMemoryRepository jdbcChatMemoryRepository)
     {
-        MessageWindowChatMemory messageWindowChatMemory  = MessageWindowChatMemory.builder()
+        MessageWindowChatMemory messageWindowChatMemory = MessageWindowChatMemory.builder()
                 .chatMemoryRepository(jdbcChatMemoryRepository)
                 .maxMessages(15)
                 .build();
 
         return builder
-                .defaultAdvisors(new SimpleLoggerAdvisor(), MessageChatMemoryAdvisor.builder(messageWindowChatMemory).build())
-                .defaultSystem("Summarize the response with in 400 words.")
+                .defaultAdvisors(
+                        MessageChatMemoryAdvisor.builder(messageWindowChatMemory).build(),
+                        new SimpleLoggerAdvisor()
+                )
                 .build();
     }
 }

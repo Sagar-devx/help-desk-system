@@ -28,7 +28,8 @@ public class Ticket {
 
     private String category;
 
-    @Column(length = 1000)
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     private String email;
