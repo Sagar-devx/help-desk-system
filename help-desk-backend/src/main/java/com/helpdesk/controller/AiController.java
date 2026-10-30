@@ -10,6 +10,7 @@ import reactor.core.publisher.Flux;
 @RestController
 @RequestMapping("/api/v1/ai")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class AiController {
 
     private final AiService aiService;
