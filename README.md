@@ -257,5 +257,3 @@ User: "My Wi-Fi keeps dropping. Email: john@test.com"
 **Sagar** · [@Sagar-devx](https://github.com/Sagar-devx)
 
 Built with ☕ Java, 🍃 Spring, and a lot of curiosity.
-
----
